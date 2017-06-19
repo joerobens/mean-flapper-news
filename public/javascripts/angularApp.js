@@ -28,7 +28,11 @@ app.config([
   }
 ]);
 
-app.factory('posts', ['$http', function($http){
+app.factory('posts', [
+  '$http',
+  '$state',
+  function($http, $state){
+    
   var o = {
     posts: []
   };
@@ -52,12 +56,12 @@ app.factory('posts', ['$http', function($http){
       });
   };
 
-  o.removePost = function(post) {
-    console.log('Factory p: ' + post._id);
-    return $http.delete('/posts/'+post._id)
-      .success(function(res){
-        console.log('Factory S: ' + res.data);
-        posts.removePost(post._id);
+  o.remove = function(post) {
+    console.log('Remove Enter: ' + post._id);
+    return $http.put('/posts/' + post._id + '/delete')
+      .success(function(data){
+        console.log('Remove Response: ' + data);
+        $state.reload();
     });
   };
 
@@ -131,8 +135,8 @@ function($scope, posts){
   };
 
   $scope.deletePost = function(post) {
-    console.log('Button: ' + post._id);
-    posts.removePost(post);
+    console.log('Button Press: ' + post._id);
+    posts.remove(post);
   };
 
 }

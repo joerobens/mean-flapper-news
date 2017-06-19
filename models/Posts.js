@@ -12,8 +12,10 @@ PostSchema.methods.upvote = function(cb) {
   this.save(cb);
 };
 
-PostSchema.methods.removePost = function(cb) {
-  this.find({ id:this._id }).remove().exec();
+PostSchema.methods.removepost = function(cb) {
+  //console.log('Method: ' + this._id);
+  //this.find({ id:this._id }).remove().exec();
+  this.remove({ _id : this._id}, cb);
 };
 
 mongoose.model('Post', PostSchema);

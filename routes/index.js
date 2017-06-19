@@ -57,11 +57,11 @@ router.put('/posts/:post/upvote', function(req, res, next) {
 });
 
 // POST REMOVE
-router.delete('/posts/:post', function(req, res, next) {
-  console.log('Store router: ' + req.post);
-  req.post.removePost(function(err, post){
+router.put('/posts/:post/delete', function(req, res, next) {
+  req.post.removepost(function(err, post){
     if (err) { return next(err); }
 
+    //res.redirect('back');
     res.json(post);
   });
 });
